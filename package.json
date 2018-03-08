@@ -34,6 +34,9 @@
   "build": {
     "productName": "VideoDownloader",
     "appId": "com.vitoal.VideoDownloader",
+    "asarUnpack": [
+      "**/app/node_modules/youtube-dl-ffmpeg-ffprobe-static/*"
+    ],
     "files": [
       "dist/",
       "node_modules/",
@@ -197,7 +200,6 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "^0.78.2",
     "source-map-support": "^0.5.3"
   },
   "devEngines": {

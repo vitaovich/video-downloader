@@ -13,5 +13,7 @@
     "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
     "postinstall": "npm run electron-rebuild"
   },
-  "dependencies": {}
+  "dependencies": {
+    "youtube-dl-ffmpeg-ffprobe-static": "^1.0.1"
+  }
 }
