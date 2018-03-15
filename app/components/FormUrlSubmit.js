@@ -1,58 +1,56 @@
 // @flow
 import React, { Component } from 'react';
-import {TextField, RaisedButton, Checkbox, FlatButton, Dialog} from 'material-ui';
-import {downloadMp3ByUrl, donwloadVideoByUrl} from '../utils/youtube-dl-utils';
+import { TextField, Checkbox, FlatButton, Dialog } from 'material-ui';
 
 // prop types
 type Props = {
   handleClose: () => void,
   handleSubmitUrl: (url: string, mp3: boolean) => void,
-  open: boolean,
-}
+  open: boolean
+};
 
 // state types
 type State = {
   value: string,
-  mp3: boolean,
+  mp3: boolean
 };
 
 export default class FormUrlSubmit extends Component<Props, State> {
   // default state values
-  state =  {
+  state = {
     value: '',
     mp3: true,
   }
 
   mp3Toggle = () => {
-    const {mp3} = this.state;
-    this.setState(prevState => ({mp3: !prevState.mp3}))
+    this.setState(prevState => ({ mp3: !prevState.mp3 }));
   }
 
   handleChange = (event: SyntheticEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    this.setState(prevState => ({value: value}));
+    const { value } = event.currentTarget;
+    this.setState({ value });
   }
 
   handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     const { value, mp3 } = this.state;
-    const {handleSubmitUrl, handleClose} = this.props;
+    const { handleSubmitUrl, handleClose } = this.props;
     handleSubmitUrl(value, mp3);
     handleClose();
     event.preventDefault();
   }
 
   render() {
-    const {mp3} = this.state;
-    const {handleClose, open} = this.props;
+    const { mp3 } = this.state;
+    const { handleClose, open } = this.props;
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
+        primary
         onClick={handleClose}
       />,
       <FlatButton
         label="Submit"
-        primary={true}
+        primary
         onClick={this.handleSubmit}
       />,
     ];

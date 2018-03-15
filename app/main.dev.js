@@ -59,8 +59,8 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  global.youtubedlPath = require('youtube-dl-ffmpeg-ffprobe-static').path.replace('app.asar', 'app.asar.unpacked')
-  global.binPath = require('youtube-dl-ffmpeg-ffprobe-static').binPath.replace('app.asar', 'app.asar.unpacked')
+  global.youtubedlPath = require('youtube-dl-ffmpeg-ffprobe-static').path.replace('app.asar', 'app.asar.unpacked');
+  global.binPath = require('youtube-dl-ffmpeg-ffprobe-static').binPath.replace('app.asar', 'app.asar.unpacked');
 
   mainWindow = new BrowserWindow({
     show: false,

@@ -1,19 +1,16 @@
 // @flow
-import {IconMenu, MenuItem, IconButton, AppBar, FlatButton, TextField} from 'material-ui';
+import { IconMenu, MenuItem, IconButton, AppBar, FlatButton, TextField } from 'material-ui';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import {donwloadVideoByUrl, downloadMp3ByUrl} from '../utils/youtube-dl-utils';
-import styles from './Home.css';
-import FormUrlSubmit from './FormUrlSubmit';
-import TopMenu from './TopMenu';
 import AddIcon from 'material-ui/svg-icons/content/add';
+import { donwloadVideoByUrl, downloadMp3ByUrl } from '../utils/youtube-dl-utils';
+import FormUrlSubmit from './FormUrlSubmit';
 
 type Props = {};
 type State = {
   open: boolean,
   downloadLocation: string,
-  log: string[],
-}
+  log: string[]
+};
 
 export default class Home extends Component<Props, State> {
   props: Props;
@@ -25,62 +22,64 @@ export default class Home extends Component<Props, State> {
   };
 
   handleOpen = () => {
-    this.setState({open: true});
+    this.setState({ open: true });
   };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({ open: false });
   };
 
   handleSubmitUrl = (url: string, mp3: boolean) => {
-    const info = {url: url, mp3: mp3};
-    const {downloadLocation} = this.state;
-    console.log("Submitted a url");
+    const info = { url, mp3 };
+    const { downloadLocation } = this.state;
+    console.log('Submitted a url');
     console.log(info);
-    switch(info.mp3) {
+    switch (info.mp3) {
       case false:
-      console.log('DOWNLOAD VIDEO URL');
-        donwloadVideoByUrl(info.url, downloadLocation, this.pushLog)
-        break
+        console.log('DOWNLOAD VIDEO URL');
+        donwloadVideoByUrl(info.url, downloadLocation, this.pushLog);
+        break;
       default:
         console.log('DOWNLOAD MP3 URL');
-        downloadMp3ByUrl(info.url, downloadLocation, this.pushLog)
-        break
+        downloadMp3ByUrl(info.url, downloadLocation, this.pushLog);
+        break;
     }
   }
 
   pushLog = (input: string) => {
-    console.log('Push log:' + input);
-    this.setState(prevState => ({log: [...prevState.log, input]}))
+    console.log(`Push log:${input}`);
+    this.setState(prevState => ({ log: [...prevState.log, input] }));
   }
 
   selectDownloadFolder = () => {
-    const {dialog} =  require('electron').remote;
+    // eslint-disable-next-line
+    const { dialog } = require('electron').remote;
     console.log('location:');
     dialog.showOpenDialog({
       properties: ['openDirectory']
-    },(files: string[]) => {
+    }, (files: string[]) => {
       console.log('files:');
       console.log(files);
-      this.setState({downloadLocation: files[0] + '/%(title)s.%(ext)s'})
-    })
+      this.setState({ downloadLocation: `${files[0]}/%(title)s.%(ext)s` });
+    });
   }
 
   handleChange = (event: SyntheticEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    this.setState(prevState => ({downloadLocation: value}));
+    const { value } = event.currentTarget;
+    this.setState({ downloadLocation: value });
   }
 
 
   render() {
-    const {open, downloadLocation, log} = this.state;
-    const menu = <IconMenu
-                  iconButtonElement={<IconButton><AddIcon /></IconButton>}
-                  anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                >
-                  <MenuItem primaryText="Download" onClick={this.handleOpen} />
-                </IconMenu>
+    const { open, downloadLocation, log } = this.state;
+    const menu = (
+      <IconMenu
+        iconButtonElement={<IconButton><AddIcon /></IconButton>}
+        anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+        targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+      >
+        <MenuItem primaryText="Download" onClick={this.handleOpen} />
+      </IconMenu>);
     const logs = log.map(x => <p>{x}</p>);
     return (
       <div data-tid="container">
@@ -95,13 +94,13 @@ export default class Home extends Component<Props, State> {
         />
         <FlatButton
           label="Set Download Location"
-          primary={true}
+          primary
           onClick={this.selectDownloadFolder}
         />
         <TextField
           hintText="Enter Download Location"
           floatingLabelText="Download Location"
-          value={this.state.downloadLocation}
+          value={downloadLocation}
           onChange={this.handleChange}
         />
         <h1>LOG</h1>
