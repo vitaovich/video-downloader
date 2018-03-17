@@ -1,7 +1,7 @@
 {
   "name": "video-downloader",
   "productName": "video-downloader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Video downloader",
   "main": "./main.prod.js",
   "author": {
