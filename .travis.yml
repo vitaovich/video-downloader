@@ -5,10 +5,6 @@ language: node_js
 node_js:
 - 8
 
-os:
-  - linux
-  - osx
-
 cache:
   yarn: true
   directories:
@@ -30,13 +26,13 @@ install:
 - export CXX="g++-4.8"
 - yarn
 - cd app && yarn && cd ..
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile
-  --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"; fi
+- "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile
+  --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 
 before_script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; export DISPLAY=:99.0; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sh -e /etc/init.d/xvfb start &; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sleep 3; fi
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start &
+- sleep 3
 
 script:
 - node --version
