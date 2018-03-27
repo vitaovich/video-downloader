@@ -4,6 +4,7 @@ import { RaisedButton } from 'material-ui';
 
 import FormUrlSubmit from '../components/FormUrlSubmit';
 import { downloadVideo } from '../utils/youtube-dl-utils';
+import DownloadInfo from '../models/download-info';
 
 type Props = {
   downloadLocation: string
@@ -31,7 +32,8 @@ export default class UrlSubmitPage extends Component<Props, State> {
   submit = (values: any) => {
     const { downloadLocation } = this.props;
     const { url, mp3 } = values;
-    downloadVideo(url, mp3, downloadLocation);
+    const download = new DownloadInfo(downloadLocation, url, mp3)
+    downloadVideo(download);
     this.handleClose();
   }
 
