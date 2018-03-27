@@ -1,57 +1,53 @@
 // @flow
 import React, { Component } from 'react';
 import { TextField, Checkbox, FlatButton, Dialog } from 'material-ui';
+import { Field, reduxForm } from 'redux-form';
 
 // prop types
 type Props = {
   handleClose: () => void,
-  handleSubmitUrl: (url: string, mp3: boolean) => void,
+  handleSubmit: () => void,
   open: boolean
 };
 
-// state types
-type State = {
-  value: string,
-  mp3: boolean
-};
+class FormUrlSubmit extends Component<Props> {
+  renderTextField = ({
+    input,
+    label,
+    hintText,
+    meta: { touched, error },
+    ...custom
+  }) => (
+    <TextField
+      hintText={hintText}
+      floatingLabelText={label}
+      errorText={touched && error}
+      {...input}
+      {...custom}
+    />
+  )
 
-export default class FormUrlSubmit extends Component<Props, State> {
-  // default state values
-  state = {
-    value: '',
-    mp3: true,
-  }
-
-  mp3Toggle = () => {
-    this.setState(prevState => ({ mp3: !prevState.mp3 }));
-  }
-
-  handleChange = (event: SyntheticEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    this.setState({ value });
-  }
-
-  handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    const { value, mp3 } = this.state;
-    const { handleSubmitUrl, handleClose } = this.props;
-    handleSubmitUrl(value, mp3);
-    handleClose();
-    event.preventDefault();
-  }
+  renderCheckbox = ({ input, label }) => (
+    <Checkbox
+      label={label}
+      checked={input.value}
+      onCheck={input.onChange}
+    />
+  )
 
   render() {
-    const { mp3 } = this.state;
-    const { handleClose, open } = this.props;
+    const { handleClose, handleSubmit, open } = this.props;
     const actions = [
       <FlatButton
         label="Cancel"
-        primary
+        secondary
         onClick={handleClose}
       />,
       <FlatButton
         label="Submit"
         primary
-        onClick={this.handleSubmit}
+        type="submit"
+        form="video-url-id"
       />,
     ];
 
@@ -63,18 +59,17 @@ export default class FormUrlSubmit extends Component<Props, State> {
         open={open}
         onRequestClose={handleClose}
       >
-        <TextField
-          hintText="Video Url"
-          floatingLabelText="Enter URL"
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-        <Checkbox
-          label="MP3"
-          checked={mp3}
-          onCheck={this.mp3Toggle}
-        />
+        <form id="video-url-id" onSubmit={handleSubmit}>
+          <Field name="url" component={this.renderTextField} label="Enter Url" hintText="Video URL" />
+          <Field name="mp3" component={this.renderCheckbox} label="MP3" />
+        </form>
       </Dialog>
     );
   }
 }
+
+FormUrlSubmit = reduxForm({ // eslint-disable-line
+  form: 'download-url-form'
+})(FormUrlSubmit);
+
+export default FormUrlSubmit;
