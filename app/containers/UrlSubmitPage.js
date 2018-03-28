@@ -32,7 +32,7 @@ export default class UrlSubmitPage extends Component<Props, State> {
   submit = (values: any) => {
     const { downloadLocation } = this.props;
     const { url, mp3 } = values;
-    const download = new DownloadInfo(downloadLocation, url, mp3)
+    const download = new DownloadInfo(downloadLocation, url, mp3);
     downloadVideo(download);
     this.handleClose();
   }

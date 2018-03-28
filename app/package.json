@@ -14,6 +14,6 @@
     "postinstall": "npm run electron-rebuild"
   },
   "dependencies": {
-    "youtube-dl-ffmpeg-ffprobe-static": "^1.0.1"
+    "youtube-dl-ffmpeg-ffprobe-static": "1.2.1"
   }
 }

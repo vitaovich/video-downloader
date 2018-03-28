@@ -28,7 +28,7 @@ const downloadMp3ByUrl = (url: string, downloadLocation: string) => {
   download(url, args, ['-o', downloadLocation]);
 };
 
-const download = (url: string, args: string[], downloadLocation: string[]) => {
+export const download = (url: string, args: string[], downloadLocation: string[]) => {
   const youtubedl = spawn(youtubedlPath, [...args, ...downloadLocation, url]);
   youtubedl.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);

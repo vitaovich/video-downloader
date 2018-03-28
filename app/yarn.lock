@@ -2,6 +2,6 @@
 # yarn lockfile v1
 
 
-youtube-dl-ffmpeg-ffprobe-static@^1.0.1:
+youtube-dl-ffmpeg-ffprobe-static@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/youtube-dl-ffmpeg-ffprobe-static/-/youtube-dl-ffmpeg-ffprobe-static-1.2.1.tgz#9f2a0b3f6114eafb283392ca27b87d96c6b377f8"
